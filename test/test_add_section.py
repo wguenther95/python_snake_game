@@ -6,7 +6,7 @@ pygame.init()
 
 game_width = 600
 game_height = 600
-font = pygame.font.SysFont(None, 25)
+font = pygame.font.SysFont(None, 28)
 screen = pygame.display.set_mode(size=(game_width, game_height))
 screen_rect = pygame.Rect(0, 0, game_width, game_height)
 clock = pygame.time.Clock()
@@ -15,8 +15,13 @@ clock = pygame.time.Clock()
 def game_over_screen():
     screen.fill((0, 0, 0))
     msg = font.render("You Lost! Press C-Play Again or Q-Quit", True, (255, 255, 255))
-    screen.blit(msg, [game_width / 6, game_height / 3])
+    screen.blit(msg, [game_width / 2 - msg.get_width() / 2, game_height / 2 - msg.get_height() / 2])
     pygame.display.update()
+
+
+def score(length):
+    msg = font.render("Score: {}".format(length), True, (255, 0, 0))
+    screen.blit(msg, [0, 0])
 
 class Snake:
 
@@ -111,6 +116,7 @@ def game_loop():
         screen.fill((0, 0, 0))
         food.draw()
         snake.draw()
+        score(snake.snake_length)
         pygame.display.update()
 
         if snake.rects[-1].colliderect(food.food_rect):
